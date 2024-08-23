@@ -9,14 +9,15 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<groupId>com.devsu.service</groupId>
-	<artifactId>config-server</artifactId>
+	<artifactId>discovery-server</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<name>config-server</name>
-	<description>Service to manage configurations for business clients</description>
+	<name>discovery-server</name>
+	<description>Service to provide msa network locations</description>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-server</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
 	</dependencies>
 </project>
