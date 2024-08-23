@@ -1,0 +1,60 @@
+version: '0.0.1'
+services:
+  config-server:
+    image: msa-config-server-001
+    build: ./service/msa-config-server
+    ports:
+      - "9090:8080"
+    environment:
+      - PORT=8080
+    networks:
+      - msa-network-001
+
+  discovery-server:
+    image: msa-discovery-server-001
+    build: ./service/msa-discovery-server
+    ports:
+      - "9091:8080"
+    environment:
+      - PORT=8080
+    networks:
+      - msa-network-001
+    depends_on:
+      - config-server
+      - discovery-server
+
+  customer:
+    image: msa-customer-001
+    build: ./business/msa-customer
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - DISCOVERY_SERVER_URI=http://discovery-server:8080/eureka
+      - CONFIG_SERVER_URI=http://config-server:8080
+      - SPRING_PROFILES=develop
+    networks:
+      - msa-network-001
+    depends_on:
+      - config-server
+      - discovery-server
+
+  account-transaction:
+    image: msa-account-transaction-001
+    build: ./business/msa-account-transaction
+    ports:
+      - "8081:8080"
+    environment:
+      - PORT=8080
+      - DISCOVERY_SERVER_URI=http://discovery-server:8080/eureka
+      - CONFIG_SERVER_URI=http://config-server:8080
+      - SPRING_PROFILES=develop
+    networks:
+      - msa-network-001
+    depends_on:
+      - config-server
+      - discovery-server
+
+networks:
+  msa-network-001:
+    external: true

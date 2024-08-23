@@ -1,0 +1,15 @@
+server:
+  port: ${PORT:8080}
+spring:
+  application:
+    name: msa-customer
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URI:http://localhost:9090}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${DISCOVERY_SERVER_URI:http://localhost:9091/eureka/}
+    register-with-eureka: true
+    fetch_registry: true
