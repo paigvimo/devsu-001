@@ -1,0 +1,7 @@
+server:
+  port: ${PORT:9091}
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false

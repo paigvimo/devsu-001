@@ -36,7 +36,7 @@ services:
       - PORT=8080
       - DISCOVERY_SERVER_URI=http://discovery-server:8080/eureka
       - CONFIG_SERVER_URI=http://config-server:8080
-      - SPRING_PROFILES=develop
+      - CONFIG_PROFILE=dev
     networks:
       - msa-network-001
     depends_on:
@@ -52,7 +52,7 @@ services:
       - PORT=8080
       - DISCOVERY_SERVER_URI=http://discovery-server:8080/eureka
       - CONFIG_SERVER_URI=http://config-server:8080
-      - SPRING_PROFILES=develop
+      - CONFIG_PROFILE=dev
     networks:
       - msa-network-001
     depends_on:
