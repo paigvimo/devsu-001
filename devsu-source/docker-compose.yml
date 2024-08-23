@@ -7,6 +7,10 @@ services:
       - "9090:8080"
     environment:
       - PORT=8080
+      - GIT_CONFIG_URI=https://github.com/paigvimo/devsu-001.git
+      - GIT_USER_NAME=paigvimo
+      - GIT_USER_PASSWORD=${GIT_USER_PASSWORD}
+      - PROFILE_ACTIVE=dev
     networks:
       - msa-network-001
 

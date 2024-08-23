@@ -3,3 +3,8 @@ server:
 spring:
   application:
     name: msa-customer
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URI:http://localhost:9090}
+      profile: dev
+      fail-fast: true
