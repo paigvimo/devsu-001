@@ -35,8 +35,11 @@ services:
       - GIT_CONFIG_URI=${GIT_CONFIG_URI}
       - GIT_USER_NAME=${GIT_USER_NAME}
       - GIT_USER_PASSWORD=${GIT_USER_PASSWORD}
+      - DISCOVERY_SERVER_URI=http://discovery-server:8080/eureka
     networks:
       - network-001
+    depends_on:
+      - discovery-server
 
   discovery-server:
     image: discovery-server-001

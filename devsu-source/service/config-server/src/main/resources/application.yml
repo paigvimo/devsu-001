@@ -14,6 +14,13 @@ spring:
           clone-on-start: true
           default-label: main
           search-paths: devsu-config/config-server-files
+eureka:
+  client:
+    service-url:
+      defaultZone: ${DISCOVERY_SERVER_URI:http://localhost:9091/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
+
 management:
   endpoints:
     web:
