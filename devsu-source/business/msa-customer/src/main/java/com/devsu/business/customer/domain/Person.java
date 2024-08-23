@@ -6,9 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "TPERSON")
-@Inheritance(strategy = InheritanceType.JOINED)
+@MappedSuperclass
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -17,7 +15,6 @@ import java.util.Date;
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     @Column(name = "PERSON_ID", length = 8)
     long personId;
     @Column(name = "IDENTIFICATION_NUMBER", nullable = false, length = 20)
@@ -25,7 +22,7 @@ public class Person {
     @Column(name = "NAME", length = 300)
     String name;
     @Column(name = "GENDER", nullable = false,  length = 1)
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     PersonGender gender;
     @Column(name = "BIRTHDATE", nullable = false)
     Date birthdate;

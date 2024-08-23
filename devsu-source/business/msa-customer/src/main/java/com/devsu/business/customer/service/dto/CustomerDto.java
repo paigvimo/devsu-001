@@ -1,6 +1,7 @@
 package com.devsu.business.customer.service.dto;
 
 import com.devsu.business.customer.domain.CustomerStatus;
+import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
@@ -12,8 +13,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerDto extends PersonDto {
-    long customerId;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     CustomerStatus status;
     String password;
 }
