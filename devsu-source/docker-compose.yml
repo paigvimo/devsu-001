@@ -1,64 +1,93 @@
 version: '0.0.1'
 services:
+  db-customer:
+    image: postgres
+    container_name: db-customer-001
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${DB_CUSTOMER_PASSWORD}
+    ports:
+      - "5432:5432"
+    networks:
+      - network-001
+
+  db-account-transaction:
+    image: postgres
+    container_name: db-account-transaction-001
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${DB_ACCOUNT_TRANSACTION_PASSWORD}
+    ports:
+      - "5433:5432"
+    networks:
+      - network-001
+
   config-server:
-    image: msa-config-server-001
-    build: ./service/msa-config-server
+    image: config-server-001
+    container_name: config-server-001
+    build: ./service/config-server
     ports:
       - "9090:8080"
     environment:
       - PORT=8080
-      - GIT_CONFIG_URI=https://github.com/paigvimo/devsu-001.git
-      - GIT_USER_NAME=paigvimo
+      - GIT_CONFIG_URI=${GIT_CONFIG_URI}
+      - GIT_USER_NAME=${GIT_USER_NAME}
       - GIT_USER_PASSWORD=${GIT_USER_PASSWORD}
-      - PROFILE_ACTIVE=dev
     networks:
-      - msa-network-001
+      - network-001
 
   discovery-server:
-    image: msa-discovery-server-001
-    build: ./service/msa-discovery-server
+    image: discovery-server-001
+    container_name: discovery-server-001
+    build: ./service/discovery-server
     ports:
       - "9091:8080"
     environment:
       - PORT=8080
     networks:
-      - msa-network-001
-    depends_on:
-      - config-server
-      - discovery-server
+      - network-001
 
   customer:
     image: msa-customer-001
+    container_name: msa-customer-001
     build: ./business/msa-customer
     ports:
       - "8080:8080"
     environment:
       - PORT=8080
-      - DISCOVERY_SERVER_URI=http://discovery-server:8080/eureka
       - CONFIG_SERVER_URI=http://config-server:8080
       - CONFIG_PROFILE=dev
+      - DISCOVERY_SERVER_URI=http://discovery-server:8080/eureka
+      - DS_URL=jdbc:postgresql://db-customer:5432/postgres
+      - DS_USER_PASSWORD=${DB_CUSTOMER_PASSWORD}
     networks:
-      - msa-network-001
+      - network-001
     depends_on:
       - config-server
       - discovery-server
+      - db-customer
 
   account-transaction:
     image: msa-account-transaction-001
+    container_name: msa-account-transaction-001
     build: ./business/msa-account-transaction
     ports:
       - "8081:8080"
     environment:
       - PORT=8080
-      - DISCOVERY_SERVER_URI=http://discovery-server:8080/eureka
       - CONFIG_SERVER_URI=http://config-server:8080
       - CONFIG_PROFILE=dev
+      - DISCOVERY_SERVER_URI=http://discovery-server:8080/eureka
+      - DS_URL=jdbc:postgresql://db-account-transaction:5432/postgres
+      - DS_USER_PASSWORD=${DB_ACCOUNT_TRANSACTION_PASSWORD}
     networks:
-      - msa-network-001
+      - network-001
     depends_on:
       - config-server
       - discovery-server
-
+      - db-account-transaction
 networks:
-  msa-network-001:
-    external: true
+  network-001:
+    driver: bridge

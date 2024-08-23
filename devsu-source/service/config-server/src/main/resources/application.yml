@@ -2,12 +2,14 @@ server:
   port: ${PORT:9090}
 
 spring:
+  application:
+    name: config-server
   cloud:
     config:
       server:
         git:
-          uri: ${GIT_CONFIG_URI:https://github.com/paigvimo/devsu-001.git}
-          username: ${GIT_USER_NAME:paigvimo}
+          uri: ${GIT_CONFIG_URI}
+          username: ${GIT_USER_NAME}
           password: ${GIT_USER_PASSWORD}
           clone-on-start: true
           default-label: main
