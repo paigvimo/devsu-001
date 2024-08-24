@@ -1,0 +1,434 @@
+{
+	"info": {
+		"_postman_id": "1044007c-30de-41a8-89e3-5d95c14898b7",
+		"name": "challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19608573"
+	},
+	"item": [
+		{
+			"name": "transaction",
+			"item": [
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{msa-account-transaction-001}}/transactions",
+							"host": [
+								"{{msa-account-transaction-001}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"gender\": \"MALE\",            // Asumiendo que \"MALE\" es un valor válido de enum PersonGender\r\n  \"birthdate\": \"1990-01-01\",  // Fecha en formato ISO 8601: YYYY-MM-DD\r\n  \"identificationNUmber\": \"123456789\",\r\n  \"address\": \"123 Elm Street\",\r\n  \"telephone\": \"555-1234\",\r\n  \"status\": \"ACTIVE\",         // Asumiendo que \"ACTIVE\" es un valor válido de enum CustomerStatus\r\n  \"password\": \"securePassword123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{msa-account-transaction-001}}/transactions/1",
+							"host": [
+								"{{msa-account-transaction-001}}"
+							],
+							"path": [
+								"transactions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"accountId\": 2,\r\n  \"amount\": -5\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{msa-account-transaction-001}}/transactions",
+							"host": [
+								"{{msa-account-transaction-001}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "report",
+			"item": [
+				{
+					"name": "generate",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{msa-account-transaction-001}}/reports?customerId=1&startDate=2024-01-01&endDate=2024-10-31",
+							"host": [
+								"{{msa-account-transaction-001}}"
+							],
+							"path": [
+								"reports"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "1"
+								},
+								{
+									"key": "startDate",
+									"value": "2024-01-01"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-10-31"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "account",
+			"item": [
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{msa-account-transaction-001}}/accounts",
+							"host": [
+								"{{msa-account-transaction-001}}"
+							],
+							"path": [
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{msa-account-transaction-001}}/accounts/1",
+							"host": [
+								"{{msa-account-transaction-001}}"
+							],
+							"path": [
+								"accounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountId\": 1,\r\n    \"customerId\": 1,\r\n    \"accountType\": \"SAV\",\r\n    \"initialAmount\": 50.00,\r\n    \"accountStatus\": \"ACT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{msa-account-transaction-001}}/accounts",
+							"host": [
+								"{{msa-account-transaction-001}}"
+							],
+							"path": [
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountId\": 1,\r\n    \"customerId\": 1,\r\n    \"accountType\": \"CHK\", \r\n    \"initialAmount\": 10.00,\r\n    \"accountStatus\": \"ACT\" \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{msa-account-transaction-001}}/accounts",
+							"host": [
+								"{{msa-account-transaction-001}}"
+							],
+							"path": [
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"gender\": \"MALE\",            // Asumiendo que \"MALE\" es un valor válido de enum PersonGender\r\n  \"birthdate\": \"1990-01-01\",  // Fecha en formato ISO 8601: YYYY-MM-DD\r\n  \"identificationNUmber\": \"123456789\",\r\n  \"address\": \"123 Elm Street\",\r\n  \"telephone\": \"555-1234\",\r\n  \"status\": \"ACTIVE\",         // Asumiendo que \"ACTIVE\" es un valor válido de enum CustomerStatus\r\n  \"password\": \"securePassword123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{msa-account-transaction-001}}/accounts/1",
+							"host": [
+								"{{msa-account-transaction-001}}"
+							],
+							"path": [
+								"accounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "customer",
+			"item": [
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{msa-customer-001}}/customers",
+							"host": [
+								"{{msa-customer-001}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{msa-customer-001}}/customers/1",
+							"host": [
+								"{{msa-customer-001}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"PAUL VIDAL\",\r\n    \"gender\": \"M\",\r\n    \"birthdate\": \"1993-07-18\",\r\n    \"identificationNumber\": \"1\",\r\n    \"address\": \"CALLE 1 5-00 Y CALLE 2\",\r\n    \"telephone\": \"555-1111\",\r\n    \"status\": \"ACT\",\r\n    \"password\": \"aPass.1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{msa-customer-001}}/customers",
+							"host": [
+								"{{msa-customer-001}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"PAUL VIDAL\",\r\n    \"gender\": \"M\",\r\n    \"birthdate\": \"1993-07-18\",\r\n    \"identificationNumber\": \"1\",\r\n    \"address\": \"CALLE 1 5-00 Y CALLE 2\",\r\n    \"telephone\": \"555-1111\",\r\n    \"status\": \"INA\",\r\n    \"password\": \"aPass.1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{msa-customer-001}}/customers",
+							"host": [
+								"{{msa-customer-001}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{msa-customer-001}}/customers/1",
+							"host": [
+								"{{msa-customer-001}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
