@@ -24,7 +24,7 @@ Asegúrate de tener instalados los siguientes componentes:
 - Java 17 o superior
 - Docker
 - PostgreSQL
-- Variables de entorno necesarias: consultar archivo incluido
+- Variables de entorno necesarias: se pueden configurar en la maquina anfitrión que desplegará los controladores, a excepción de la variable: GIT_USER_PASSWORD, mismo que por seguridad puede consultarla al correo pvandriod93@gmail.com.
  ```
 setx DB_CUSTOMER_PASSWORD "xxx"
 setx DB_ACCOUNT_TRANSACTION_PASSWORD "xxx"
