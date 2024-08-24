@@ -3,6 +3,8 @@ package com.devsu.business.customer.service;
 import com.devsu.business.customer.domain.Customer;
 import com.devsu.business.customer.domain.CustomerStatus;
 import com.devsu.business.customer.exception.CustomerNotFoundException;
+import com.devsu.business.customer.mocks.CustomerMock;
+import com.devsu.business.customer.mocks.IdMock;
 import com.devsu.business.customer.repository.CustomerRepository;
 import com.devsu.business.customer.service.dto.CustomerDto;
 import com.devsu.business.customer.service.impl.CustomerServiceImpl;
@@ -38,11 +40,14 @@ class CustomerServiceImplTest {
 
     @Test
     void testGetById_Success() {
-        long customerId = 1L;
-        Customer customer = new Customer();
-        CustomerDto customerDto = new CustomerDto();
-        when(customerRepository.findById(customerId)).thenReturn(Optional.of(customer));
-        when(customerMapper.toDto(customer)).thenReturn(customerDto);
+        long customerId = IdMock.CUSTOMER_ID;
+        Customer customer = CustomerMock.mockCustomerEntity();
+        CustomerDto customerDto = CustomerMock.mockCustomerDto();
+
+        when(customerRepository.findById(customerId))
+                .thenReturn(Optional.of(customer));
+        when(customerMapper.toDto(customer))
+                .thenReturn(customerDto);
 
         CustomerDto result = customerService.getById(customerId);
 
@@ -53,8 +58,9 @@ class CustomerServiceImplTest {
 
     @Test
     void testGetById_NotFound() {
-        long customerId = 1L;
-        when(customerRepository.findById(customerId)).thenReturn(Optional.empty());
+        long customerId =  IdMock.CUSTOMER_ID;
+        when(customerRepository.findById(customerId))
+                .thenReturn(Optional.empty());
 
         assertThrows(CustomerNotFoundException.class, () -> customerService.getById(customerId));
         verify(customerRepository).findById(customerId);
@@ -62,11 +68,14 @@ class CustomerServiceImplTest {
 
     @Test
     void testGetByIdentificationNumber_Success() {
-        String identificationNumber = "12345";
-        Customer customer = new Customer();
-        CustomerDto customerDto = new CustomerDto();
-        when(customerRepository.findByIdentificationNumber(identificationNumber)).thenReturn(Optional.of(customer));
-        when(customerMapper.toDto(customer)).thenReturn(customerDto);
+        String identificationNumber = IdMock.IDENTIFICATION_NUMBER;
+        Customer customer = CustomerMock.mockCustomerEntity();
+        CustomerDto customerDto = CustomerMock.mockCustomerDto();
+
+        when(customerRepository.findByIdentificationNumber(identificationNumber))
+                .thenReturn(Optional.of(customer));
+        when(customerMapper.toDto(customer))
+                .thenReturn(customerDto);
 
         CustomerDto result = customerService.getByIdentificationNumber(identificationNumber);
 
@@ -77,8 +86,10 @@ class CustomerServiceImplTest {
 
     @Test
     void testGetByIdentificationNumber_NotFound() {
-        String identificationNumber = "12345";
-        when(customerRepository.findByIdentificationNumber(identificationNumber)).thenReturn(Optional.empty());
+        String identificationNumber = IdMock.IDENTIFICATION_NUMBER;
+
+        when(customerRepository.findByIdentificationNumber(identificationNumber))
+                .thenReturn(Optional.empty());
 
         assertThrows(CustomerNotFoundException.class, () -> customerService.getByIdentificationNumber(identificationNumber));
         verify(customerRepository).findByIdentificationNumber(identificationNumber);
@@ -86,10 +97,13 @@ class CustomerServiceImplTest {
 
     @Test
     void testGetAll() {
-        List<Customer> customerList = Arrays.asList(new Customer(), new Customer());
-        CustomerDto customerDto = new CustomerDto();
-        when(customerRepository.findByStatusNot(CustomerStatus.DEL)).thenReturn(customerList);
-        when(customerMapper.toDto(any(Customer.class))).thenReturn(customerDto);
+        List<Customer> customerList = Arrays.asList(CustomerMock.mockCustomerEntity(), CustomerMock.mockCustomerEntity());
+        CustomerDto customerDto = CustomerMock.mockCustomerDto();
+
+        when(customerRepository.findByStatusNot(CustomerStatus.DEL))
+                .thenReturn(customerList);
+        when(customerMapper.toDto(any(Customer.class)))
+                .thenReturn(customerDto);
 
         List<CustomerDto> result = customerService.getAll();
 
@@ -101,13 +115,18 @@ class CustomerServiceImplTest {
 
     @Test
     void testSave_Success() {
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setIdentificationNumber("12345");
-        Customer customer = new Customer();
-        when(customerRepository.findByIdentificationNumber(customerDto.getIdentificationNumber())).thenReturn(Optional.empty());
-        when(customerMapper.toEntity(customerDto)).thenReturn(customer);
-        when(customerRepository.save(customer)).thenReturn(customer);
-        when(customerMapper.toDto(customer)).thenReturn(customerDto);
+        Customer customer = CustomerMock.mockCustomerEntity();
+        CustomerDto customerDto = CustomerMock.mockCustomerDto();
+        customerDto.setIdentificationNumber(IdMock.IDENTIFICATION_NUMBER);
+
+        when(customerRepository.findByIdentificationNumber(customerDto.getIdentificationNumber()))
+                .thenReturn(Optional.empty());
+        when(customerMapper.toEntity(customerDto))
+                .thenReturn(customer);
+        when(customerRepository.save(customer))
+                .thenReturn(customer);
+        when(customerMapper.toDto(customer))
+                .thenReturn(customerDto);
 
         CustomerDto result = customerService.save(customerDto);
 
@@ -120,10 +139,12 @@ class CustomerServiceImplTest {
 
     @Test
     void testSave_CustomerAlreadyExists() {
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setIdentificationNumber("12345");
-        Customer customer = new Customer();
-        when(customerRepository.findByIdentificationNumber(customerDto.getIdentificationNumber())).thenReturn(Optional.of(customer));
+        Customer customer = CustomerMock.mockCustomerEntity();
+        CustomerDto customerDto = CustomerMock.mockCustomerDto();
+        customerDto.setIdentificationNumber(IdMock.IDENTIFICATION_NUMBER);
+
+        when(customerRepository.findByIdentificationNumber(customerDto.getIdentificationNumber()))
+                .thenReturn(Optional.of(customer));
 
         assertThrows(CustomerNotFoundException.class, () -> customerService.save(customerDto));
         verify(customerRepository).findByIdentificationNumber(customerDto.getIdentificationNumber());
@@ -131,13 +152,18 @@ class CustomerServiceImplTest {
 
     @Test
     void testUpdate_Success() {
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setIdentificationNumber("12345");
-        Customer customer = new Customer();
-        when(customerRepository.findByIdentificationNumber(customerDto.getIdentificationNumber())).thenReturn(Optional.of(customer));
-        when(customerMapper.toEntity(customerDto)).thenReturn(customer);
-        when(customerRepository.save(customer)).thenReturn(customer);
-        when(customerMapper.toDto(customer)).thenReturn(customerDto);
+        Customer customer = CustomerMock.mockCustomerEntity();
+        CustomerDto customerDto = CustomerMock.mockCustomerDto();
+        customerDto.setIdentificationNumber(IdMock.IDENTIFICATION_NUMBER);
+
+        when(customerRepository.findByIdentificationNumber(customerDto.getIdentificationNumber()))
+                .thenReturn(Optional.of(customer));
+        when(customerMapper.toEntity(customerDto))
+                .thenReturn(customer);
+        when(customerRepository.save(customer))
+                .thenReturn(customer);
+        when(customerMapper.toDto(customer))
+                .thenReturn(customerDto);
 
         CustomerDto result = customerService.update(customerDto);
 
@@ -150,9 +176,11 @@ class CustomerServiceImplTest {
 
     @Test
     void testUpdate_CustomerNotFound() {
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setIdentificationNumber("12345");
-        when(customerRepository.findByIdentificationNumber(customerDto.getIdentificationNumber())).thenReturn(Optional.empty());
+        CustomerDto customerDto = CustomerMock.mockCustomerDto();
+        customerDto.setIdentificationNumber(IdMock.IDENTIFICATION_NUMBER);
+
+        when(customerRepository.findByIdentificationNumber(customerDto.getIdentificationNumber()))
+                .thenReturn(Optional.empty());
 
         assertThrows(CustomerNotFoundException.class, () -> customerService.update(customerDto));
         verify(customerRepository).findByIdentificationNumber(customerDto.getIdentificationNumber());
@@ -160,9 +188,11 @@ class CustomerServiceImplTest {
 
     @Test
     void testDelete_Success() {
-        String identificationNumber = "12345";
+        String identificationNumber = IdMock.IDENTIFICATION_NUMBER;
         Customer customer = new Customer();
-        when(customerRepository.findByIdentificationNumber(identificationNumber)).thenReturn(Optional.of(customer));
+
+        when(customerRepository.findByIdentificationNumber(identificationNumber))
+                .thenReturn(Optional.of(customer));
 
         boolean result = customerService.delete(identificationNumber);
 
@@ -174,8 +204,10 @@ class CustomerServiceImplTest {
 
     @Test
     void testDelete_CustomerNotFound() {
-        String identificationNumber = "12345";
-        when(customerRepository.findByIdentificationNumber(identificationNumber)).thenReturn(Optional.empty());
+        String identificationNumber = IdMock.IDENTIFICATION_NUMBER;
+
+        when(customerRepository.findByIdentificationNumber(identificationNumber))
+                .thenReturn(Optional.empty());
 
         assertThrows(CustomerNotFoundException.class, () -> customerService.delete(identificationNumber));
         verify(customerRepository).findByIdentificationNumber(identificationNumber);
