@@ -17,7 +17,7 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PERSON_ID", length = 8)
     long personId;
-    @Column(name = "IDENTIFICATION_NUMBER", nullable = false, length = 20)
+    @Column(name = "IDENTIFICATION_NUMBER", unique = true, nullable = false, length = 20)
     String identificationNumber;
     @Column(name = "NAME", length = 300)
     String name;

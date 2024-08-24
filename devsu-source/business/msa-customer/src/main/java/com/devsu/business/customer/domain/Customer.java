@@ -13,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 
 public class Customer extends Person {
     @Column(length = 3, nullable = false,  name = "STATUS")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     CustomerStatus status;
     @Column(length = 3000, nullable = false, name = "PASSWORD")
     String password;
