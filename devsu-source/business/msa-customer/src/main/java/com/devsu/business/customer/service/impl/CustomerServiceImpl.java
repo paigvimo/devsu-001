@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDto getById(long id) {
         Optional<Customer> customerOptional = customerRepository.findById(id);
         if (customerOptional.isPresent()) {
-            return customerMapper.toCustomerDto(customerOptional.get());
+            return customerMapper.toDto(customerOptional.get());
         } else {
             throw new CustomerNotFoundException("CUSTOMER WITH ID {0} NOT FOUND", id);
         }
@@ -39,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDto getByIdentificationNumber(String identificationNumber) {
         Optional<Customer> customerOptional = customerRepository.findByIdentificationNumber(identificationNumber);
         if (customerOptional.isPresent()) {
-            return customerMapper.toCustomerDto(customerOptional.get());
+            return customerMapper.toDto(customerOptional.get());
         } else {
             throw new CustomerNotFoundException("CUSTOMER WITH IDENTIFICATION NUMBER {0} NOT FOUND", identificationNumber);
         }
@@ -50,7 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
         List<Customer> customerList = customerRepository.findByStatusNot(CustomerStatus.DEL);
         List<CustomerDto> customerDtoList = new ArrayList<>();
         for (Customer customer : customerList) {
-            customerDtoList.add(customerMapper.toCustomerDto(customer));
+            customerDtoList.add(customerMapper.toDto(customer));
         }
         return customerDtoList;
     }
@@ -62,9 +62,9 @@ public class CustomerServiceImpl implements CustomerService {
         if (customerOptional.isPresent()) {
             throw new CustomerNotFoundException("CUSTOMER WITH IDENTIFICATION NUMBER {0} ALREADY EXIST", customerDto.getIdentificationNumber());
         } else {
-            Customer customer = customerMapper.toCustomer(customerDto);
+            Customer customer = customerMapper.toEntity(customerDto);
             customer = customerRepository.save(customer);
-            return customerMapper.toCustomerDto(customer);
+            return customerMapper.toDto(customer);
         }
     }
 
@@ -75,9 +75,9 @@ public class CustomerServiceImpl implements CustomerService {
         if (customerOptional.isEmpty()) {
             throw new CustomerNotFoundException("CUSTOMER WITH IDENTIFICATION NUMBER {0} NOT EXIST", customerDto.getIdentificationNumber());
         } else {
-            Customer customer = customerMapper.toCustomer(customerDto);
+            Customer customer = customerMapper.toEntity(customerDto);
             customer = customerRepository.save(customer);
-            return customerMapper.toCustomerDto(customer);
+            return customerMapper.toDto(customer);
         }
     }
 
