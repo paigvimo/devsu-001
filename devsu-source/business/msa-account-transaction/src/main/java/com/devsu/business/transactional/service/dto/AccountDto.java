@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountDto {
-    Long accountNumber;
+    Long accountId;
 
     Long customerId;
 
@@ -24,5 +24,6 @@ public class AccountDto {
 
     BigDecimal initialAmount;
 
+    @Enumerated(EnumType.STRING)
     AccountStatus accountStatus;
 }

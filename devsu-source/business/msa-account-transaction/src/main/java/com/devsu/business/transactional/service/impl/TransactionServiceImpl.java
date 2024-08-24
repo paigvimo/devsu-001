@@ -2,12 +2,16 @@ package com.devsu.business.transactional.service.impl;
 
 import com.devsu.business.transactional.domain.Account;
 import com.devsu.business.transactional.domain.Transaction;
+import com.devsu.business.transactional.domain.enums.AccountStatus;
 import com.devsu.business.transactional.exception.NotFoundException;
 import com.devsu.business.transactional.repository.AccountRepository;
 import com.devsu.business.transactional.repository.TransactionRepository;
+import com.devsu.business.transactional.service.MovementService;
 import com.devsu.business.transactional.service.TransactionService;
+import com.devsu.business.transactional.service.dto.MovementDto;
 import com.devsu.business.transactional.service.dto.TransactionDto;
 import com.devsu.business.transactional.service.mapper.TransactionMapper;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,7 +28,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     TransactionRepository transactionRepository;
     TransactionMapper transactionMapper;
-
+    MovementService movementService;
     AccountRepository accountRepository;
 
     @Override
@@ -48,13 +52,18 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionDto save(TransactionDto transactionDto) {
-        Optional<Account> accountOptional = accountRepository.findById(transactionDto.getAccount().getAccountNumber());
+    @Transactional
+    public TransactionDto save(MovementDto movementDto) {
+        Optional<Account> accountOptional = accountRepository.findById(movementDto.getAccountId());
         if (accountOptional.isEmpty()) {
-            throw new NotFoundException("ACCOUNT NUMBER {0} NOT EXIST", transactionDto.getAccount().getAccountNumber());
+            throw new NotFoundException("ACCOUNT NUMBER {0} NOT EXIST", movementDto.getAccountId());
+        }
+        Account account = accountOptional.get();
+        if (!account.getAccountStatus().equals(AccountStatus.ACT)){
+            throw new NotFoundException("ACCOUNT NUMBER {0} IS NOT {1}", movementDto.getAccountId(), AccountStatus.ACT.getDescription());
         }
 
-        Transaction transaction = transactionMapper.toEntity(transactionDto);
+        Transaction transaction = movementService.performMovement(movementDto, account);
         transaction = transactionRepository.save(transaction);
         return transactionMapper.toDto(transaction);
     }

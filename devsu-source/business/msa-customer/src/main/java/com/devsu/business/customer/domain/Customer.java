@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 @lombok.Getter
 @lombok.Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
+
 public class Customer extends Person {
     @Column(length = 3, nullable = false,  name = "STATUS")
     @Enumerated(EnumType.ORDINAL)

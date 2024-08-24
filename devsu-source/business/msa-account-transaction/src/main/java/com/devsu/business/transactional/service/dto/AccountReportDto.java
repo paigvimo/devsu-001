@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountReportDto {
-    Long accountNumber;
+    Long accountId;
     BigDecimal balance;
     List<TransactionDto> transactions;
 }

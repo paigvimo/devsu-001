@@ -1,8 +1,5 @@
 package com.devsu.business.transactional.service.dto;
 
-import com.devsu.business.transactional.domain.enums.TransactionType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -14,11 +11,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MovementDto {
-
-    Long accountNumber;
-
+    Long accountId;
     BigDecimal amount;
-
-    @Enumerated(EnumType.STRING)
-    TransactionType transactionType;
 }
